@@ -1,0 +1,93 @@
+Margarita Garcia-Otero
+
+HW5_Writeup.txt
+
+index_R800.html
+
+
+File: "TESTS_index_rack_background-size.html"
+    Used to test rack background options.
+Not included in final work.
+
+
+File: "draw_tiles_R400.js"
+    Contains function used to create tiles.
+    Hard-coded for testing purposes.  Not updated
+    to create tiles according to required 
+    probability distribution.
+
+Problems and things that don't work:
+
+1) Random number generator  ("TESTS_index_read_JSON_R20.html")
+
+It was written to read JSON file since I had problems using
+the sample code provided by Professor in class (data-json.js).
+I modified the pieces.json file and renamed it
+"pieces_modified_MGO.json" to remove the "pieces" field and
+put it in same directory as html file and followed program
+flow using console.log statements and F12 (Inspect).
+This worked to generate random number to get desired letter 
+in distribution and its corresponding value (points).
+
+I can run it using Live Server on my laptop and watch the 
+console.log output to make sure it exits the loop when 
+it finds a match for the random number.  I planned to moved
+the code out of the html file into its own function in javascript.
+I discovered today that bringing up the html file from my file 
+app on my laptop gives me a failure.
+(FYI - I moved it to data directory for this submission.)
+I ran out of time to dig into the other alternative
+associative array in the javascript file.
+Also, this json file does not have 2 blank tiles so I had
+the random number generator be 1-98 inclusive.
+
+I was hard-coding several tiles to test in my code (A, B, Z).
+
+2) Two added buttons have not been properly implemented in 
+js/game_options.js to score word or restart game.
+
+
+3) I originally tried to layer divs over the image of the board
+but had problems lining up things.  I figured I would
+go back and use absolute positioning with layering and z-index 
+o or play with using the image as background.
+I had issues scaling the wooden rack image and the tiles
+to my satisfaction so I moved on there too.
+
+I used a grid to create the columns to simulate 5 slots.
+One cell is dblWord, and one cell is dblLetter.
+The dblLetter cell calculates points correctly if cell is
+dropped on it.
+
+I added two data fields to the tiles so I could transfer
+the two fields (data-letter and data-value) to the corresponding dropped
+location.
+
+Tiles are contained to game container and will revert to 
+previous location if not dropped on the grid for the board
+or the grey area for the player's tiles.
+
+When tile is dropped, some text appears in the cell so I could
+monitor the data transfer using .data method.
+The letters and current tile points appear above the grid.
+The Column contents shows the position of each letter and points
+dependent on whether or not a dblLetter square is occupied.
+The word "empty" appears at first and "filled" is written in square
+when filled.
+
+4) I had problems if I moved to the setup_UI() function 
+to an external javascript file so I kept it in main html file.
+(This file sets up all the draggable and droppable UIs.)
+
+5) After the first tile is placed, I keep track of the index
+"first_index" so I can see if any subsequent tiles are placed
+on the board which is not on the next slot to the right.
+An alert pops up to say that this is not an allowable slot.
+
+6) I do not have a check to make sure that words are a minimum
+of two letters.
+
+7) I wanted to have the board slots go from filled to empty
+and tile points removed from the scoreboard if a tile was
+placed on the board and then moved back to the rack by the player
+but I ran out of time to add this feature.

@@ -1,0 +1,120 @@
+  /* myStyle_Dec17_2pm.css */
+
+    /* https://css-tricks.com/box-sizing/ */
+   * {
+        box-sizing: border-box;
+    } 
+   
+    h3 { 
+        clear: left; 
+    }
+
+    #game_container {
+        width: 80%;
+        min-width: 1400px;
+        height: 800px; 
+        border: solid black 3px;
+        padding: 40px;
+    }
+    /* draggable class is next line */
+   /* change cursor to hand */
+   .draggable { 
+        width: 90px; height: 90px; padding: 0.5em; 
+        float: left; margin: 0 10px 10px 0; 
+        cursor:grab;
+    }
+    
+    #grid-container { 
+        overflow: hidden;
+        display: grid;
+
+        /* grid-template: 95px / repeat(5, 90px); */
+        grid-template: 120px / repeat(5, 120px); */
+        /* grid-column-gap: 2px; */
+        grid-gap: 5px;
+        background-color: blue;
+        /* padding around edge to border */ 
+        padding: 10px; 
+        /* padding extends to inside border */
+        background-clip: padding-box; 
+        border: solid orange 5px; }
+
+    /* div element/cell is 80 x 88, div */
+    #grid-container > div, .col {
+        border: solid magenta 2px;
+        background-color: white;
+        text-align: center;
+        padding: 0;
+        font-size: 20px;
+    }
+
+    .filled {
+        border: solid green 2px;
+    }                                                  
+
+    /* https://www.sitepoint.com/community/t/how-to-contain-image-to-fit-this-div/437470 */
+    #board_div > img {
+        object-fit: cover;
+        width:100%; 
+        height:100%; 
+    }
+
+    #board_div {     
+        /*                   
+        background-image: url('images/Scrabble_Board_OneLine.png');
+        background: cover; 
+        background-repeat: no-repeat;
+        */
+        width: 1300px; 
+        height: 90px;
+        padding:0;
+        margin: 50px auto 200px auto;
+        /* css outside border https://stackoverflow.com/questions/9102900/css-outside-border */
+        outline: solid red 3px;
+    }
+
+    button {
+        font-size: 30px;
+        margin-left: 30px;
+    }
+
+/* add image background later 
+    change width back to 800 px?*/
+    #tile_rack {
+        width: 1100px;
+        height: 140px;
+        /* margin: 400px auto; */
+        margin-left: 0%;
+        padding: 10px;
+        margin: auto;
+        background-color: grey;
+        border: solid black 5px;
+    }
+
+    .tile {
+        display: inline-block;
+        width:80px;
+        height:80px;
+        cursor:grab;
+    }
+
+    #test_drop {
+        width:150px;
+        height:150px;
+        border: solid green 2px;
+        /* background-color commented out */
+        text-align: center;
+        padding: 0;
+        font-size: 30px;
+    }
+
+    label {
+        font-size: 20px;
+        margin: 0px 20px;
+    }
+
+    #error_msg {
+        color:red;
+        font-size:30px;
+    }
+

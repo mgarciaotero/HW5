@@ -1,0 +1,124 @@
+<!-- Margarita Garcia-Otero
+ 
+Details are in HW5_Writeup.txt
+
+ index_read_JSON_R20.html 
+
+RESOURCES:
+ https://stackoverflow.com/questions/20772417/how-to-loop-through-json-array-in-jquery
+
+ $.each(data, function(i, item) {
+   alert(data[i].PageName);
+});​
+
+$.each(data, function(i, item) {
+  alert(item.PageName);
+https://www.tutorialrepublic.com/faq/how-to-load-local-json-file-using-jquery.php});​
+
+
+https://stackoverflow.com/questions/2342371/jquery-loop-on-json-data-using-each
+
+$.each(data, function(i, item) {
+    alert(data[i].PageName);
+});
+
+$.each(data, function(i, item) {
+    alert(item.PageName);
+});
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>jQuery Loading Local JSON File</title>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+</head> 
+<body>
+    <script>
+    $(document).ready(function(){
+        
+
+        
+        //https://stackoverflow.com/questions/10463131/jquery-parsing-json-array
+    
+
+            
+        $.getJSON('pieces_modified_MGO.json', function(data){
+            //alert("data read");
+             // 98 tiles in JSON file (does not include blanks)
+             // Returns a random integer from 1 to 98 (both inclusive)
+            let num = Math.floor(Math.random() * 98) + 1;    
+            let found_index = 0;
+            let freq = 0;
+
+            $.each(data, function(index, item) {  
+                freq = data[index].amount;
+                
+                console.log("(" + index + ") "
+                    +  num  
+                    + " freq: " + freq );
+                
+              //  console.log(item.letter);
+               if (num <= freq) {
+                    found_index = index;
+                   // console.log ("......   tile found: " + data[index].letter);
+    
+                    console.log ("........tile found data[ " + index
+                    + " ]  " + data[index].letter
+                    + " , " + data[index].value);
+                    
+            // https://api.jquery.com/each/#:~:text=Use%20return%20false%20to%20break%20out%20of%20each()%20loops%20early.
+            // Use return false to break out of each() loops early.
+            // https://teamtreehouse.com/community/how-to-break-out-of-a-jquery-each-loop-at-a-certain-index-value
+                    return false;
+                } else { 
+                    console.log("continue search...");
+                    num -= freq; 
+                }
+                    
+    
+            });
+            console.log(" outside of each loop");
+            console.log (".........line 76 index: " + found_index);
+
+            console.log("line 81 length: " + data.length + "  " 
+            + data[found_index].letter + " , " + data[found_index].value);
+
+            alert("line 84 length: " + data.length + "  " 
+            + data[found_index].letter + " , " + data[found_index].value);
+
+        }).fail(function(){
+            alert("failure");
+            console.log("An error has occurred.");
+        });
+
+            
+               
+        //for (let i = 0; i < data.length(); i++) {
+        //    console.log(data[i].value);
+            //return i;  
+        //}
+
+
+
+    });
+
+    // https://www.w3schools.com/jsref/jsref_random.asp
+    // generate random floating point number between 0-99 inclusive, 
+    // floor will round result down to nearest integer
+
+    function getRandomTile(stop_index, tiles_distribution) {
+        let x = Math.floor( Math.random() * 100 );
+
+        for (let i = 0; i < tile_distribution.length; i++) {
+            console.log(tiles_distribution[i].value);
+            //return i;  
+        }
+    }
+    
+
+    </script> 
+    
+</body>
+</html>

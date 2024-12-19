@@ -1,0 +1,374 @@
+<!-- 
+Margarita Garcia-Otero
+ GUI-1 HW5
+ File Name: index.html
+
+This program is meant to replicate a scrabble game.
+
+See HW5_Writeup.txt for details.
+
+Resources are included in code where they were used for reference.
+
+ -->
+ 
+ <!DOCTYPE html><html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Scrabble Demo</title>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="css/myStyle.css">    
+ 
+    
+  </head>
+  <body>
+       
+    <div id = "game_container">
+        
+    <!--
+        <div id = "board_div">   
+            <img src="images/Scrabble_Board_OneLine.png"> 
+            <div class="slot" ></div>
+            <div class="slot" ></div>
+        </div>
+    -->           
+        <h1>Scrabble Scoreboard (index 3 & 4 are dblLetter squares)</h1>         
+        <div id="scoreboard"> 
+            <label>Column contents: 
+                <span id="str">  </span></label>
+            <label>Points (just 1 current tile): 
+                <span id="one_tile_pts">  </span></label>
+            <label>Total points: 
+                <span id="sum_pts">  </span></label>
+            <label>Tiles in bag:  
+                <span id="numTiles">  </span>  </label>    
+        </div>  
+
+        <div id="grid-container">
+              <div class="col">0<p>empty</p></div>
+              <div class="col">1<p>empty</p></div>
+              <div class="col">2<p>empty</p></div>
+              <div class="col dblLetter">3<p>empty_dblLetter</p></div> 
+              <div class="col dblLetter">4<p>empty_dblLetter</p></div>
+              
+        </div>  
+            <p id="error_msg"></p>
+
+            <br> <br> <br> <br><br> <br> <br> 
+        
+        <!-- 
+        <div id = "test_drop" class = "ui-widget-header">
+            <p>#test_drop</p>
+         </div>
+        -->
+
+        <p>FYI: two buttons below are not implemented</p>
+         <button onclick="myFunction()">score word</button>
+         <button onclick="myFunction()">restart game</button>
+         
+
+
+         <br><br>
+         
+        <div id="tile_rack">  
+        </div>  
+   
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
+    <!-- keep setup_UI function in this file for now for now-->
+    <script src="js/draw_tiles_R600.js"></script>
+    <script src="js/game_options.js"></script>
+
+
+    
+    
+
+    <script>
+      // w3schools making horizontal ul 
+      // https://jqueryui.com/draggable/
+    $( function() {
+
+        // set marker so I know index of first tile on board
+        var first_index = -1;
+
+        // begin game setup
+
+        var tiles_in_bag = 97;
+        var tiles_to_draw = 3;
+        var letters = " ";
+        var points = 0;
+        var total_points = 0;
+        
+        // fill in scoreboard
+        $( "#one_tile_pts" ).text(points); //value
+        $( "#sum_pts" ).text(total_points); //value
+        $( "#numTiles").text(tiles_in_bag); // remaining_tiles
+
+        draw_tiles(tiles_to_draw, tiles_in_bag);
+        
+        // https://www.w3schools.com/jquery/tryit.asp?filename=tryjquery_dom_html_get
+        //$( "span" ).first().text( $( "div" ).data( "test" ).first );
+        //$( "span" ).last().text( $( "div" ).data( "test" ).last );
+       
+        // set up drag and drop UIs
+        setup_UI();
+
+        // loop through columns for column contents display
+        $(".col").each(function(index,item){
+            //alert($(this).text())
+            //alert($(item).index());
+            //alert($(item).data("letter"));    
+            letters += $(item).data("letter");
+       
+            //alert( letters);
+           // alert($(this).data("value"));  
+            //alert($(item).text());
+        });
+        $( "#str" ).text(letters);
+        
+        
+
+    } ); // end of document ready function
+  </script>
+
+<script>
+
+    // This function initializes all drag and drop UI elements
+    // Resource: https://jqueryui.com/draggable/
+    // FYI - initialize all draggables first before setting options
+    // separately using draggable method.
+    // revert can be boolean, string, or function   
+    // (usually revert: true) 
+
+    // if true, droppable is disabled (disabled: true)
+    // set the disabled option after initialization
+    // https://api.jqueryui.com/droppable/#event-drop
+    // $( ".selector" ).droppable( "option", "disabled", true );
+
+function setup_UI() {
+    $( ".tile" ).draggable({ 
+        containment: "#game_container",
+        revert: "invalid",
+    });
+
+    $( "#tile_rack" ).droppable({
+        accept: ".tile",
+        drop: function(event, ui) {
+        //alert( "line 141 - tile rack drop" ); 
+        }
+    });
+
+// Resources:    
+// https://jsfiddle.net/c3TpU/   inside drop:  alert(ui.draggable.attr('id'));
+
+// https://stackoverflow.com/questions/8676009/how-do-i-use-jquery-ui-draggable-to-set-values-in-forms
+// How do I use jQuery UI draggable to set values in forms?
+/* 
+    $("#droppable").droppable({
+    drop: function(event, ui) {
+        // ui.draggable is the jQuery object for the thing being dragged (and
+        // hence the thing being dropped).
+        $('input').val(ui.draggable.data('product'));
+    }
+    }); 
+*/
+// w3schools example $( "p" ).last().addClass( "selected" );
+
+// FYI this class: ui-droppable which is one col with index: $(this).index()
+    $( ".col" ).droppable({
+        accept: ".tile",
+        drop: function(event, ui) {
+            console.log("DROP EVENT TRIGGERED...(line 166)");
+
+        //   https://www.youtube.com/watch?v=m7Tl4csIJh8
+        //   jQuery UI Droppable: How to Implement a Shopping Cart Interface using jQuery UI Droppable
+            console.log ( "...tile data: " 
+                + ui.draggable.data("letter")
+                + " , " + ui.draggable.data("value") );
+
+ //MGO TEST              
+                if ( $('.filled').length === 0 ) {   
+                    // reset value from initial -1 (line 92)  
+                    first_index = $(this).index();
+                    next_index = $(this).index() + 1;
+                    //alert("first: " + first_index + " next:" + next_index); 
+                } else {
+                if ($(this).index() == next_index) {
+                    
+                    // set new value for next_index
+                    next_index++;
+                } else {
+                    alert("ERROR: not an allowable slot");
+                  
+                }
+            }
+//MGO TEST  
+        
+
+
+
+
+
+
+            var col_index = $(this).index(); 
+            console.log("Index of this (col) = this: " + col_index);
+
+            // output of next line = class of this:  ui-droppable
+            //    console.log( "...this class " + $(this).attr("class") );
+            
+            /* https://forum.jquery.com/portal/en/community/topic/how-to-get-the-ui-draggable-content
+                $(this).append (ui.draggable);
+                alert( $(this).html()); 
+            */
+
+            //$( this ).addClass( "ui-state-highlight" ).find( "p" ).html( markup );
+            
+            console.log( "...col html: " +  $(this).html() );
+
+        // Test if any double letter tiles are filled.
+        // If yes, double value and save data.
+
+            $(this).data( "letter", ui.draggable.data("letter") );
+
+
+            if (  $(this).hasClass( "dblLetter") ) {
+                $(this).data( "value", 2 * ui.draggable.data("value")); 
+                //alert("col dblLetter points:" + $(this).hasClass( "dblLetter") );//value
+            } else {
+                $(this).data( "value", ui.draggable.data("value"));
+            }    
+                
+           // display new value on scoreboard
+           $( "#one_tile_pts" ).text(  $(this).data( "value") );     
+            
+
+            $( this ).addClass( "filled" );
+
+            var str = $(this).attr("class") 
+                        + $(this).data("letter") 
+                        +  $(this).data("value");  
+            //alert("line 225" + str);
+            // set str
+            $( this ).find( "p" ).html( str );
+            // display str
+            $( this ).find( "p" ).html();
+
+            // update scoreboard
+
+            //alert(" line 233: update scoreboard");
+
+            // iterate through cols to display contents
+            letters = "";
+            $(".col").each(function(index,item){
+                //alert($(this).text())
+                //alert($(item).index());
+                //alert($(item).data("letter"));
+           //     letters +=  $(item).data("letter") + " V ";
+                //alert( letters);
+                if ( $(this).hasClass( "filled") ) {
+                    letters +=  $(item).data("letter")
+                                + ($(this).data("value") + "  "); 
+                } else {
+                    letters +=  $(item).data("letter") + "  ";    
+                }
+               
+            
+                // alert($(this).data("value"));    
+                //alert($(item).text());
+            });
+            $( "#str" ).text(letters);
+            points = 0;
+        
+            total_points = 0;
+
+        $( "#sum_pts" ).text( " 0 "); //value
+
+            if (  $(this).hasClass( "dblLetter") ) {
+                points = $(this).data("value");
+                $( "#one_tile_pts" ).text( points + " (dblLetter)"); 
+            } else {
+                points = $(this).data("value");
+                $( "#one_tile_pts" ).text( points ); 
+            }
+            //alert("col dblLetter points:" + $(this).hasClass( "dblLetter") );//value
+       
+
+        }
+    });
+
+        // set the data values after UI initialization
+        $( ".col").data( "letter", "-" );
+        $( ".col").data( "value", "?" );
+        // keep plain css for now
+        //$( ".col").droppable( "option", "activeClass", "ui-state-highlight" );  
+
+
+// FYI this = ui-widget-header ui-droppable 
+$( "#test_drop" ).droppable({
+    accept: ".tile",
+    // https://jqueryui.com/droppable/#accepted-elements
+    classes: {
+        "ui-droppable-active": "ui-state-active",
+        "ui-droppable-hover": "ui-state-hover",
+    },
+    drop: function(event, ui) {
+        console.log("DROP EVENT TRIGGERED...");
+    //   https://www.youtube.com/watch?v=m7Tl4csIJh8
+    //   jQuery UI Droppable: How to Implement a Shopping Cart Interface using jQuery UI Droppable
+    console.log ( "...draggable data 1: " + $(ui.draggable).data("letter")
+            +  $(ui.draggable).data("value") );
+    console.log ( "...draggable data 2: " + ui.draggable.data("letter")
+            +  ui.draggable.data("value") );
+       
+        console.log( "...#test_drop html: " +  $("#test_drop").html() );
+         // returns "ui-widget-header ui-droppable" 
+        console.log( "...#test_drop [0] class list " + $("#test_drop")[0].classList );      
+        console.log( "...this -> class " + $(this).attr("class") );
+
+        // https://stackoverflow.com/questions/1227286/get-class-list-for-element-with-jquery
+        console.log( "...#test_drop class list " + $("#test_drop")[0].classList );
+// https://forum.jquery.com/portal/en/community/topic/how-to-get-the-ui-draggable-content
+       // $(this).append (ui.draggable);
+       // alert( $(this).html()); 
+       
+       console.log( "line 265 ", $(this).data("letter"),  $(this).data("value") );
+      
+       ui.draggable.data("myData", "Draggable tile here!!!");
+       
+    console.log( ui.draggable.data("myData")) ;
+       
+       // returns -1
+       console.log("Index of draggable: " + $(ui).index());
+
+
+         $(this).data( "letter", $(ui).data("letter") );
+         $(this).data( "value", $(ui).data("value") );
+         
+         var markup = "filled " + $(this).data("letter") +  $(this).data("value");  
+         //alert("line 237 " + markup);
+
+         $( this ).addClass( "ui-state-highlight" ).find( "p" ).html( markup );
+         //alert( "contents of p " +  $( this ).find( "p" ).html() );
+    }
+}); // end of droppable initialization
+
+
+// run after UI initialization
+    console.log ("*** REGULAR PROGRAM FLOW line 242...");
+    $( "#test_drop").data( "letter", "-" );
+    $( "#test_drop").data( "value", "0" );
+    console.log( "SET #test_drop data: " + $( "#test_drop").data( "letter"),
+                " , " + $( "#test_drop").data( "value") );
+    
+}  // end of setup_UI function
+
+
+</script>
+
+
+
+   
+  </body>
+  </html>

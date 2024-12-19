@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html >
+<head>
+<style>
+
+#example1 {
+  border: 2px solid black;
+  padding: 25px;
+  background-image: url("images/scrabble-tile-holder-406774_640.png");
+  background-repeat: no-repeat;
+  background-size: auto;
+}
+#example2 {
+  border: 2px solid black;
+  padding: 25px;
+  background-image: url("images/scrabble-tile-holder-406774_640.png");
+  background-repeat: no-repeat;
+  background-size: 300px 100px;
+}
+#example3 {
+  border: 2px solid black;
+  padding: 25px;
+  background-image: url("images/scrabble-tile-holder-406774_640.png");
+  background-repeat: no-repeat;
+  background-size: 300px auto;
+}
+#example4 {
+  border: 2px solid black;
+  padding: 25px;
+  background-image: url("images/scrabble-tile-holder-406774_640.png");
+  background-repeat: no-repeat;
+  background-size: 50%;
+}
+
+#example5 {
+  border: 2px solid black;
+  padding: 25px;
+  background-image: url("images/scrabble-tile-holder-406774_640.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#example6 {
+  border: 2px solid black;
+  padding: 25px;
+  background-image: url("images/scrabble-tile-holder-406774_640.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+ul#board { list-style-type: none;
+  margin: 0; padding: 10px;
+  overflow: hidden;
+  background-color: gold;
+    border: solid black 2px;
+}
+li { float:left; display: block;
+  height: 40px; width: 40px;
+    border: solid blue 1px;
+    text-align: center;
+  padding: 15px;
+  text-decoration: none;
+  background-color: white; }
+
+li:hover { background-color: orange; }
+
+</style>
+
+
+</head>
+<body>
+
+    <!-- https://www.w3schools.com/cssref/tryit.php?filename=trycss3_background-size 
+     demos
+    https://www.w3schools.com/cssref/playdemo.ph              p?filename=playcss_background-size&preval=contain
+        
+    -->
+    <h2>background-size: auto (default):</h2>
+    <div id="example1">
+      <h2>Hello World</h2>
+      <p>The background image is displayed in its original size.</p>
+    </div>
+    
+    <h2>background-size: length (set width and height 300 x 100):</h2>
+<div id="example2">
+  <h2>Hello World</h2>
+  <p>Here, the background image is set to 300px width and 100px high.</p>
+</div>
+
+<h2>background-size: length ( 300px auto)</h2>
+<div id="example3">
+  <h2>Hello World</h2>
+  <p>Here, the background image is set to 300px width (2nd value height = auto)</p>
+</div>
+
+<h2>background-size: percentage (50%, auto)</h2>
+<div id="example4">
+  <h2>Hello World</h2>
+  <p>Here, the background image width is percentage (50%) of parent container</p>
+</div>
+
+
+<h2>background-size: cover:</h2>
+<div id="example5">
+  <h2>Hello World</h2>
+  <p>Here, the background image is stretched out or cut to fit container</p>
+</div>
+
+
+<h2>background-size: contain:</h2>
+<div id="example6">
+  <h2>Hello World</h2>
+  <p>Here, the background image is fully visible (aspect ratio kept)</p>
+</div>
+
+<h2>Style list horizontally</h2>
+
+<ul id="board"><li>0</li><li>1</li><li>2</li>
+  <li>3</li><li>4</li></ul>
+  
+  
+
+<ul id="rack"><li></li><li></li><li></li>
+  <li></li><li>4</li></ul>
+
+
+<script>
+  // w3schools making horizontal ul 
+  // https://jqueryui.com/draggable/
+</script>
+
+</body>
+</html>
+
